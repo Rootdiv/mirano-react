@@ -1,0 +1,198 @@
+@use '../variables' as *;
+@use '../media' as *;
+
+.filters {
+  &__form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  &__group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    &_choices {
+      gap: 64px;
+
+      @include mobile {
+        gap: 40px;
+      }
+    }
+  }
+
+  &__radio {
+    position: absolute;
+    appearance: none;
+  }
+
+  &__label {
+    position: relative;
+    border-radius: 300px;
+    padding: 16px;
+    padding-left: 60px;
+    cursor: pointer;
+    background-color: $white;
+    background-size: 40px;
+    background-repeat: no-repeat;
+    background-position: left 16px center;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+
+    @include mobile {
+      padding: 10px 12px 10px 40px;
+      background-position: left 12px center;
+      background-size: 24px;
+      min-height: 40px;
+    }
+
+    &_flowers {
+      background-image: url('/img/flowers@1x.png');
+      background-image: image-set(
+        url('/img/flowers@1x.avif') type('image/avif') 1x,
+        url('/img/flowers@2x.avif') type('image/avif') 2x,
+        url('/img/flowers@1x.webp') type('image/webp') 1x,
+        url('/img/flowers@2x.webp') type('image/webp') 2x,
+        url('/img/flowers@1x.png') type('image/png') 1x,
+        url('/img/flowers@2x.png') type('image/png') 2x
+      );
+    }
+
+    &_toys {
+      background-image: url('/img/bear-toy@1x.png');
+      background-image: image-set(
+        url('/img/bear-toy@1x.avif') type('image/avif') 1x,
+        url('/img/bear-toy@2x.avif') type('image/avif') 2x,
+        url('/img/bear-toy@1x.webp') type('image/webp') 1x,
+        url('/img/bear-toy@2x.webp') type('image/webp') 2x,
+        url('/img/bear-toy@1x.png') type('image/png') 1x,
+        url('/img/bear-toy@2x.png') type('image/png') 2x
+      );
+    }
+
+    &_postcards {
+      background-image: url('/img/postcard@1x.png');
+      background-image: image-set(
+        url('/img/postcard@1x.avif') type('image/avif') 1x,
+        url('/img/postcard@2x.avif') type('image/avif') 2x,
+        url('/img/postcard@1x.webp') type('image/webp') 1x,
+        url('/img/postcard@2x.webp') type('image/webp') 2x,
+        url('/img/postcard@1x.png') type('image/png') 1x,
+        url('/img/postcard@2x.png') type('image/png') 2x
+      );
+    }
+
+    &:hover {
+      background-color: $orange;
+    }
+  }
+
+  &__radio:focus-visible + &__label {
+    outline: 2px solid $orange;
+    outline-offset: 3px;
+  }
+
+  &__radio:checked + &__label {
+    background-color: $light-orange;
+    color: $white;
+  }
+
+  &__choices {
+    position: relative;
+  }
+
+  &__select {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background-image: url('/img/triangle.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+
+    &_active {
+      &::after {
+        transform: scale(-1);
+      }
+    }
+  }
+
+  &__choices-box {
+    position: absolute;
+    top: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 12px;
+    background-color: $white;
+    box-shadow: 0 2px 2px 2px #cccccc;
+
+    @include mobile {
+      font-size: 14px;
+      padding: 16px;
+    }
+  }
+
+  &__price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px;
+  }
+
+  &__input-price {
+    border: none;
+    border-radius: 32px;
+    padding: 8px 16px;
+    width: 110px;
+    height: 40px;
+    background-color: $bg;
+
+    @include mobile {
+      width: 90px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $light-orange;
+    }
+  }
+
+  &__type-list {
+    padding: 24px;
+
+    @include mobile {
+      padding: 16px;
+    }
+  }
+
+  &__type-item {
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__type-button {
+    white-space: nowrap;
+
+    &:hover {
+      color: $light-orange;
+    }
+
+    &_active {
+      color: $orange;
+    }
+  }
+}

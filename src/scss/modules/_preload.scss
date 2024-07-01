@@ -1,0 +1,32 @@
+@use '../variables' as *;
+@use '../media' as *;
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.preload {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 999;
+  justify-content: center;
+  padding-top: 200px;
+
+  @include mobile {
+    padding-top: 100px;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    border: 7px solid $green;
+    border-top-color: $light-orange;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+  }
+}

@@ -1,0 +1,87 @@
+@use '@/scss/variables' as *;
+@use '@/scss/media' as *;
+
+.footer {
+  padding: 80px 0;
+  background-color: $footer;
+  background-image: url('/img/figure.svg');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100%;
+
+  @include laptop {
+    background-size: 120%;
+  }
+
+  @include mobile {
+    background-size: 210%;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+
+    @include tablet {
+      gap: 40px;
+    }
+  }
+
+  &__logo {
+    width: 200px;
+  }
+
+  &__address {
+    font-style: normal;
+  }
+
+  &__link {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__mail {
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  &__social-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  &__social-item {
+    border-radius: 100%;
+  }
+
+  &__social-link {
+    outline: none;
+    color: $orange;
+
+    &:hover,
+    &:focus-visible {
+      color: $light-orange;
+    }
+  }
+
+  &__developers-title {
+    margin-bottom: 3px;
+  }
+
+  &__developers-item {
+    margin-bottom: 3px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__copyright {
+    text-transform: uppercase;
+  }
+}

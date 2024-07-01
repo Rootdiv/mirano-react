@@ -1,0 +1,9 @@
+.choices {
+  &__box {
+    display: none;
+
+    &_open {
+      display: block;
+    }
+  }
+}
