@@ -1,7 +1,9 @@
 import './cart.scss';
+import { goodsArray } from '@/goodsArray';
+import { CartItem } from '@/modules/Cart/CartItem';
 
 export const Cart = () => (
-  <section className="cart">
+  <section className="cart cart_open">
     <div className="cart__container">
       <div className="cart__header">
         <h3 className="cart__title">Ваш заказ</h3>
@@ -12,7 +14,11 @@ export const Cart = () => (
         </button>
       </div>
       <p className="cart__date-delivery">сегодня&nbsp;в&nbsp;14:00</p>
-      <ul className="cart__list"></ul>
+      <ul className="cart__list">
+        {goodsArray.map(item => (
+          <CartItem key={item.id} {...item} />
+        ))}
+      </ul>
       <div className="cart__footer">
         <button type="button" className="cart__order-btn">
           Оформить
