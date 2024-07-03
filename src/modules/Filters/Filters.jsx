@@ -1,5 +1,5 @@
 import './filters.scss';
-import './choices.scss';
+import { Choices } from '@/modules/Choices/Choices';
 
 export const Filters = () => (
   <section className="filters">
@@ -21,51 +21,41 @@ export const Filters = () => (
           </label>
         </fieldset>
         <fieldset className="filters__group filters__group_choices">
-          <div className="filters__choices choices">
-            <button type="button" className="filters__select choices__btn">
-              Цена
-            </button>
-            <div className="filters__choices-box choices__box">
-              <fieldset className="filters__price">
-                <input type="text" placeholder="от" name="minPrice" className="filters__input-price" />
-                <input type="text" placeholder="до" name="maxPrice" className="filters__input-price" />
-              </fieldset>
-            </div>
-          </div>
-          <div className="filters__choices filters__choices_type choices">
-            <button type="button" className="filters__select choices__btn">
-              Тип товара
-            </button>
-            <div className="filters__choices-box filters__choices-box_type choices__box">
-              <ul className="filters__type-list">
-                <li className="filters__type-item">
-                  <button className="filters__type-button" type="button">
-                    Монобукеты
-                  </button>
-                </li>
-                <li className="filters__type-item">
-                  <button className="filters__type-button" type="button">
-                    Авторские букеты
-                  </button>
-                </li>
-                <li className="filters__type-item">
-                  <button className="filters__type-button" type="button">
-                    Цветы в коробке
-                  </button>
-                </li>
-                <li className="filters__type-item">
-                  <button className="filters__type-button" type="button">
-                    Цветы в корзине
-                  </button>
-                </li>
-                <li className="filters__type-item">
-                  <button className="filters__type-button" type="button">
-                    Букеты из сухоцветов
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <Choices buttonLabel="Цена">
+            <fieldset className="filters__price">
+              <input type="text" placeholder="от" name="minPrice" className="filters__input-price" />
+              <input type="text" placeholder="до" name="maxPrice" className="filters__input-price" />
+            </fieldset>
+          </Choices>
+          <Choices buttonLabel="Тип товара">
+            <ul className="filters__type-list">
+              <li className="filters__type-item">
+                <button className="filters__type-button" type="button">
+                  Монобукеты
+                </button>
+              </li>
+              <li className="filters__type-item">
+                <button className="filters__type-button" type="button">
+                  Авторские букеты
+                </button>
+              </li>
+              <li className="filters__type-item">
+                <button className="filters__type-button" type="button">
+                  Цветы в коробке
+                </button>
+              </li>
+              <li className="filters__type-item">
+                <button className="filters__type-button" type="button">
+                  Цветы в корзине
+                </button>
+              </li>
+              <li className="filters__type-item">
+                <button className="filters__type-button" type="button">
+                  Букеты из сухоцветов
+                </button>
+              </li>
+            </ul>
+          </Choices>
         </fieldset>
       </form>
     </div>

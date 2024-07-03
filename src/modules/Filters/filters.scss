@@ -102,47 +102,6 @@
     color: $white;
   }
 
-  &__choices {
-    position: relative;
-  }
-
-  &__select {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    &::after {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background-image: url('/img/triangle.svg');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-    }
-
-    &_active {
-      &::after {
-        transform: scale(-1);
-      }
-    }
-  }
-
-  &__choices-box {
-    position: absolute;
-    top: calc(100% + 20px);
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 12px;
-    background-color: $white;
-    box-shadow: 0 2px 2px 2px #cccccc;
-
-    @include mobile {
-      font-size: 14px;
-      padding: 16px;
-    }
-  }
-
   &__price {
     display: flex;
     align-items: center;
