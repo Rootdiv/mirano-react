@@ -5,19 +5,18 @@ const initialState = {
 };
 
 const modalSlice = createSlice({
-  name: 'modal',
+  name: 'order',
   initialState,
   reducers: {
+    openModal(state) {
+      state.isOpen = true;
+    },
     closeModal(state) {
       state.isOpen = false;
-    },
-    openOrder(state) {
-      state.isOpen = true;
     },
   },
 });
 
-export const { closeModal } = modalSlice.actions;
-export const { openOrder } = modalSlice.actions;
+export const { openModal, closeModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

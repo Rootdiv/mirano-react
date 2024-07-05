@@ -1,7 +1,9 @@
-export const CartItem = ({ img, title, price, quantity = 1 }) => (
+import { API_URL } from '@/const';
+
+export const CartItem = ({ photoUrl, name, price, quantity = 1 }) => (
   <li className="cart__item">
-    <img src={img} alt={title} className="cart__image" />
-    <h4 className="cart__item-title">{title}</h4>
+    <img src={`${API_URL}${photoUrl}`} alt={name} className="cart__image" />
+    <h4 className="cart__item-title">{name}</h4>
     <div className="cart__counter">
       <button type="button" className="cart__counter-btn">
         -
