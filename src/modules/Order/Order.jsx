@@ -1,8 +1,38 @@
 import { useRef } from 'react';
 import './order.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { closeModal } from '@/redux/modalSlice';
 
-export const Order = ({ totalPriceValue }) => {
+export const Order = () => {
+  const totalPriceValue = 0;
+  const id = '971f365a-caa1-4cdb-9446-bad2eff047e1';
+
   const selectWrapper = useRef(null);
+  const isOpen = useSelector(state => state.modal.isOpen);
+  const dispatch = useDispatch();
+  const isOrder = false;
+
+  const handlerClose = ({ target }) => {
+    if (target.closest('.order__close') || target.classList.contains('order')) {
+      dispatch(closeModal());
+    }
+  };
+
+  if (!isOpen) return null;
+
+  if (isOrder) {
+    return (
+      <div className="order" onClick={handlerClose}>
+        <div className="order__wrapper">
+          <h2 className="order__title">Заказ оформлен</h2>
+          <p className="order__id">Ваш номер заказа: {id}</p>
+        </div>
+        <button type="button" className="order__close">
+          &times;
+        </button>
+      </div>
+    );
+  }
 
   const openSelect = () => {
     selectWrapper.current.classList.add('order__select-wrapper_active');
@@ -19,7 +49,7 @@ export const Order = ({ totalPriceValue }) => {
   const deliveryDate = `${day}.${month}`;
 
   return (
-    <div className="order">
+    <div className="order" onClick={handlerClose}>
       <div className="order__wrapper">
         <h2 className="order__title">Оформить заказ</h2>
         <form className="order__form" id="order">

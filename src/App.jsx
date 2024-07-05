@@ -5,7 +5,6 @@ import { Filters } from '@/modules/Filters/Filters';
 import { Subscription } from '@/modules/Subscription/Subscription';
 import { Footer } from '@/modules/Footer/Footer';
 import { Order } from '@/modules/Order/Order';
-import { OrderSuccess } from '@/modules/Order/OrderSuccess';
 
 export const App = () => (
   <>
@@ -17,7 +16,6 @@ export const App = () => (
       <Subscription />
     </main>
     <Footer />
-    {/* <Order totalPriceValue="0" />
-    <OrderSuccess id="971f365a-caa1-4cdb-9446-bad2eff047e1" /> */}
+    <Order />
   </>
 );
