@@ -11,7 +11,7 @@ export const Goods = () => {
 
   useEffect(() => {
     if (goodsStatus === 'idle') {
-      dispatch(fetchGoods());
+      dispatch(fetchGoods({ type: 'bouquets' }));
     }
   }, [dispatch, goodsStatus]);
 

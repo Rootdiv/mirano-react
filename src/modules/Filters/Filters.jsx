@@ -1,18 +1,28 @@
 import './filters.scss';
 import { Choices } from '@/modules/Choices/Choices';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchGoods } from '@/redux/goodsSlice';
 
 export const Filters = () => {
+  const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
 
   const handleChoicesToggle = index => {
     setOpenChoice(openChoice === index ? null : index);
   };
+
+  const applyFilters = ({ target }) => {
+    if (target.name === 'type') {
+      dispatch(fetchGoods({ type: target.value }));
+    }
+  };
+
   return (
     <section className="filters">
       <h2 className="visually-hidden">Фильтры</h2>
       <div className="container">
-        <form className="filters__form">
+        <form className="filters__form" onInput={applyFilters}>
           <fieldset className="filters__group">
             <input type="radio" className="filters__radio" name="type" id="flowers" value="bouquets" defaultChecked />
             <label htmlFor="flowers" className="filters__label filters__label_flowers">
