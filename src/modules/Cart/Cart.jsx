@@ -1,5 +1,5 @@
 import './cart.scss';
-import { CartItem } from '@/modules/Cart/CartItem';
+import { CartItem } from '@/modules/CartItem/CartItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleCart } from '@/redux/cartSlice';
 import { openModal } from '@/redux/orderSlice';

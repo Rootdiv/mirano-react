@@ -1,0 +1,86 @@
+@use '@/scss/variables' as *;
+@use '@/scss/media' as *;
+
+.cart {
+  &__item {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba($dark, 0.04);
+    display: grid;
+    grid-template-columns: 54px 1fr min-content;
+    grid-template-areas:
+      'image title title'
+      'image counter price';
+    gap: 8px 12px;
+
+    &:last-child {
+      border-bottom-color: transparent;
+    }
+  }
+
+  &__image {
+    grid-area: image;
+    border-radius: 12px;
+    object-fit: cover;
+    width: 54px;
+    height: 54px;
+  }
+
+  &__item-title {
+    grid-area: title;
+    font-weight: 400;
+    font-size: 14px;
+  }
+
+  &__counter {
+    grid-area: counter;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    &-btn {
+      border-radius: 6px;
+      width: 29px;
+      height: 29px;
+      background-color: $bg;
+
+      &:hover {
+        background-color: $light-orange;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $light-orange;
+        outline-offset: -2px;
+      }
+    }
+
+    &-input {
+      width: 29px;
+      height: 29px;
+      border: none;
+      font-size: 14px;
+      text-align: center;
+      border-radius: 6px;
+      appearance: textfield;
+      background-color: transparent;
+
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        display: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $light-orange;
+        outline-offset: -2px;
+      }
+    }
+  }
+
+  &__price {
+    grid-area: price;
+    text-align: right;
+
+    @include mobile {
+      font-size: 14px;
+    }
+  }
+}
