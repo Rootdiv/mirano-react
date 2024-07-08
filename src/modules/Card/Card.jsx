@@ -3,12 +3,23 @@ import './card.scss';
 import { useDispatch } from 'react-redux';
 import { addItemToCard } from '@/redux/cartSlice';
 import { API_URL } from '@/const';
+import { useState } from 'react';
 
 export const Card = ({ className, id, photoUrl, name, price }) => {
   const dispatch = useDispatch();
 
+  // коды: \u00A0 - неразрывный пробел и \u20BD - символ рубля
+  const [buttonText, setButtonText] = useState(`${price}\u00A0\u20BD`);
+
   const handlerAddToCard = () => {
     dispatch(addItemToCard({ id, photoUrl, name, price }));
+  };
+
+  const handleMouseEnter = () => {
+    setButtonText('в\u00A0корзину');
+  };
+  const handleMouseLeave = () => {
+    setButtonText(`${price}\u00A0\u20BD`);
   };
 
   return (
@@ -21,14 +32,10 @@ export const Card = ({ className, id, photoUrl, name, price }) => {
           <button
             type="button"
             className="card__button"
-            onMouseEnter={({ target }) => {
-              target.innerHTML = 'в&nbsp;корзину';
-            }}
-            onMouseLeave={({ target }) => {
-              target.innerHTML = `${price}&nbsp;&#8381`;
-            }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             onClick={handlerAddToCard}>
-            {price}&nbsp;&#8381;
+            {buttonText}
           </button>
         </div>
       </div>
