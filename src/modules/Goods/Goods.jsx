@@ -16,11 +16,15 @@ export const Goods = () => {
   if (goodsStatus === 'success') {
     content = (
       <ul className="goods__list">
-        {goods.map(item => (
-          <li key={item.id} className="goods__item">
-            <Card className="goods__card" {...item} />
-          </li>
-        ))}
+        {goods.length ? (
+          goods.map(item => (
+            <li key={item.id} className="goods__item">
+              <Card className="goods__card" {...item} />
+            </li>
+          ))
+        ) : (
+          <li className="goods__no-product">Товары не найдены</li>
+        )}
       </ul>
     );
   }
