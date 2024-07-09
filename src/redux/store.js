@@ -3,6 +3,7 @@ import cartReducer from '@/redux/cartSlice';
 import orderReducer from '@/redux/orderSlice';
 import goodsReducer from '@/redux/goodsSlice';
 import filtersReducer from '@/redux/filtersSlice';
+import searchReducer from '@/redux/searchSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     order: orderReducer,
     goods: goodsReducer,
     filters: filtersReducer,
+    search: searchReducer,
   },
 });
 
