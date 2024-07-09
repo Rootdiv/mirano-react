@@ -1,3 +1,4 @@
+import './cartItem.scss';
 import { API_URL } from '@/const';
 
 export const CartItem = ({ photoUrl, name, price, quantity = 1 }) => (
