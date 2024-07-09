@@ -1,7 +1,7 @@
 export const getValidFilters = filters => {
   const validFilters = {};
   for (const key in filters) {
-    if (Object.hasOwnProperty.call(filters, key) && filters[key]) {
+    if (filters[key] && key !== 'typeName') {
       validFilters[key] = filters[key];
     }
   }

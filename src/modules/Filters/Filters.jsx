@@ -1,20 +1,16 @@
 import './filters.scss';
 import { Choices } from '@/modules/Choices/Choices';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods } from '@/redux/goodsSlice';
 import { debounce, getValidFilters } from '@/utils';
+import { maxPriceChange, minPriceChange, typeChange } from '@/redux/filtersSlice';
 
 export const Filters = () => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
 
-  const [filters, setFilters] = useState({
-    type: 'bouquets',
-    minPrice: '',
-    maxPrice: '',
-    category: '',
-  });
+  const filters = useSelector(state => state.filters);
 
   const prevFiltersRef = useRef(filters);
 
@@ -39,15 +35,19 @@ export const Filters = () => {
     setOpenChoice(openChoice === index ? null : index);
   };
 
-  const handleTypeChange = ({ target }) => {
-    const newFilters = { ...filters, type: target.value, minPrice: '', maxPrice: '' };
-    setFilters(newFilters);
+  const handlerTypeChange = ({ target }) => {
+    const typeName = target.labels[0].textContent;
+    dispatch(typeChange({ type: target.value, typeName }));
+    setOpenChoice(null);
   };
 
-  const handlePriceChange = ({ target }) => {
+  const handlerPriceChange = ({ target }) => {
     target.value = target.value.replace(/[^[0-9]/g, '');
-    const newFilters = { ...filters, [target.name]: target.value };
-    setFilters(newFilters);
+    if (target.name === 'minPrice') {
+      dispatch(minPriceChange({ [target.name]: target.value }));
+    } else {
+      dispatch(maxPriceChange({ [target.name]: target.value }));
+    }
   };
 
   return (
@@ -63,7 +63,7 @@ export const Filters = () => {
               id="flowers"
               value="bouquets"
               checked={filters.type === 'bouquets'}
-              onChange={handleTypeChange}
+              onChange={handlerTypeChange}
             />
             <label htmlFor="flowers" className="filters__label filters__label_flowers">
               Цветы
@@ -75,7 +75,7 @@ export const Filters = () => {
               id="toys"
               value="toys"
               checked={filters.type === 'toys'}
-              onChange={handleTypeChange}
+              onChange={handlerTypeChange}
             />
             <label htmlFor="toys" className="filters__label filters__label_toys">
               Игрушки
@@ -87,7 +87,7 @@ export const Filters = () => {
               id="postcards"
               value="postcards"
               checked={filters.type === 'postcards'}
-              onChange={handleTypeChange}
+              onChange={handlerTypeChange}
             />
             <label htmlFor="postcards" className="filters__label filters__label_postcards">
               Открытки
@@ -102,7 +102,7 @@ export const Filters = () => {
                   name="minPrice"
                   className="filters__input-price"
                   value={filters.minPrice}
-                  onChange={handlePriceChange}
+                  onChange={handlerPriceChange}
                 />
                 <input
                   type="text"
@@ -110,7 +110,7 @@ export const Filters = () => {
                   name="maxPrice"
                   className="filters__input-price"
                   value={filters.maxPrice}
-                  onChange={handlePriceChange}
+                  onChange={handlerPriceChange}
                 />
               </fieldset>
             </Choices>

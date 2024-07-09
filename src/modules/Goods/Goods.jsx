@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 export const Goods = () => {
   const { items: goods, status: goodsStatus, error } = useSelector(state => state.goods);
+  const goodsTitle = useSelector(state => state.filters.typeName);
 
   let content = null;
 
@@ -32,7 +33,7 @@ export const Goods = () => {
     <section className="goods">
       <div className="container goods__container">
         <div className="goods__box">
-          <h2 className="goods__title">Цветы</h2>
+          <h2 className="goods__title">{goodsTitle}</h2>
           {content}
         </div>
         <Cart />
