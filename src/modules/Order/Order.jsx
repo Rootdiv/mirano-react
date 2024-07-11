@@ -4,11 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '@/redux/orderSlice';
 
 export const Order = () => {
-  const totalPriceValue = 0;
   const id = '971f365a-caa1-4cdb-9446-bad2eff047e1';
 
   const selectWrapper = useRef(null);
   const isOpen = useSelector(state => state.order.isOpen);
+  const totalPriceValue = useSelector(state => state.cart.totalPrice);
   const dispatch = useDispatch();
   const isOrderReady = false;
 
