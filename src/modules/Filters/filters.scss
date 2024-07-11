@@ -23,11 +23,6 @@
         gap: 40px;
       }
     }
-
-    &:disabled {
-      pointer-events: none;
-      cursor: default;
-    }
   }
 
   &__radio {

@@ -18,7 +18,6 @@ export const Filters = () => {
   const [openChoice, setOpenChoice] = useState(null);
 
   const filters = useSelector(state => state.filters);
-  const search = useSelector(state => state.search.text);
 
   const prevFiltersRef = useRef(filters);
 
@@ -29,9 +28,7 @@ export const Filters = () => {
   ).current;
 
   useEffect(() => {
-    if (search !== '') {
-      dispatch(typeChange({ type: '', typeName: 'Результат поиска' }));
-      dispatch(fetchGoods({ search }));
+    if (filters.type === '') {
       setOpenChoice(null);
       return;
     }
@@ -44,7 +41,7 @@ export const Filters = () => {
       debouncedFetchGoods(validFilters);
     }
     prevFiltersRef.current = filters;
-  }, [dispatch, debouncedFetchGoods, filters, search]);
+  }, [dispatch, debouncedFetchGoods, filters]);
 
   const handleChoicesToggle = index => {
     setOpenChoice(openChoice === index ? null : index);
@@ -66,12 +63,12 @@ export const Filters = () => {
       <h2 className="visually-hidden">Фильтры</h2>
       <div className="container">
         <form className="filters__form">
-          <fieldset className="filters__group" disabled={search !== ''}>
+          <fieldset className="filters__group">
             {filterTypes.map(item => (
               <FilterRadio key={item.value} {...item} type={filters.type} handlerTypeChange={handlerTypeChange} />
             ))}
           </fieldset>
-          <fieldset className="filters__group filters__group_choices" disabled={search !== ''}>
+          <fieldset className="filters__group filters__group_choices">
             <Choices buttonLabel="Цена" isOpen={openChoice === 0} onToggle={() => handleChoicesToggle(0)}>
               <fieldset className="filters__price">
                 <input
