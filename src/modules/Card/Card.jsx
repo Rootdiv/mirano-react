@@ -12,7 +12,7 @@ export const Card = ({ className, id, photoUrl, name, price }) => {
   const [buttonText, setButtonText] = useState(`${price}\u00A0\u20BD`);
 
   const handlerAddToCard = () => {
-    dispatch(addItemToCard({ id, photoUrl, name, price }));
+    dispatch(addItemToCard({ productId: id, quantity: 1 }));
   };
 
   const handleMouseEnter = () => {

@@ -13,15 +13,10 @@ export const Header = () => {
 
   const handlerSearch = event => {
     event.preventDefault();
-    if (event.target.value !== undefined) {
-      const searchQuery = event.target.value.trim();
+    const formData = new FormData(event.target);
+    const searchQuery = formData.get('search').trim();
+    if (searchQuery) {
       dispatch(searchText(searchQuery));
-    } else {
-      const formData = new FormData(event.target);
-      const searchQuery = formData.get('search').trim();
-      if (searchQuery) {
-        dispatch(searchText(searchQuery));
-      }
     }
   };
 
@@ -35,7 +30,6 @@ export const Header = () => {
             name="search"
             placeholder="Букет из роз"
             aria-label="Начать поиск"
-            onChange={handlerSearch}
           />
           <button className="header__search-button">
             <svg width="20" height="20">

@@ -4,7 +4,14 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods } from '@/redux/goodsSlice';
 import { debounce, getValidFilters } from '@/utils';
-import { maxPriceChange, minPriceChange, typeChange } from '@/redux/filtersSlice';
+import { typeChange, priceChange } from '@/redux/filtersSlice';
+import { FilterRadio } from '@/modules/Filters/FilterRadio';
+
+const filterTypes = [
+  { value: 'bouquets', title: 'Цветы' },
+  { value: 'toys', title: 'Игрушки' },
+  { value: 'postcards', title: 'Открытки' },
+];
 
 export const Filters = () => {
   const dispatch = useDispatch();
@@ -24,7 +31,7 @@ export const Filters = () => {
   useEffect(() => {
     if (search !== '') {
       dispatch(typeChange({ type: '', typeName: 'Результат поиска' }));
-      debouncedFetchGoods({ search });
+      dispatch(fetchGoods({ search }));
       setOpenChoice(null);
       return;
     }
@@ -51,11 +58,7 @@ export const Filters = () => {
 
   const handlerPriceChange = ({ target }) => {
     target.value = target.value.replace(/[^[0-9]/g, '');
-    if (target.name === 'minPrice') {
-      dispatch(minPriceChange({ [target.name]: target.value }));
-    } else {
-      dispatch(maxPriceChange({ [target.name]: target.value }));
-    }
+    dispatch(priceChange({ name: target.name, value: target.value }));
   };
 
   return (
@@ -64,42 +67,9 @@ export const Filters = () => {
       <div className="container">
         <form className="filters__form">
           <fieldset className="filters__group" disabled={search !== ''}>
-            <input
-              type="radio"
-              className="filters__radio"
-              name="type"
-              id="flowers"
-              value="bouquets"
-              checked={filters.type === 'bouquets'}
-              onChange={handlerTypeChange}
-            />
-            <label htmlFor="flowers" className="filters__label filters__label_flowers">
-              Цветы
-            </label>
-            <input
-              type="radio"
-              className="filters__radio"
-              name="type"
-              id="toys"
-              value="toys"
-              checked={filters.type === 'toys'}
-              onChange={handlerTypeChange}
-            />
-            <label htmlFor="toys" className="filters__label filters__label_toys">
-              Игрушки
-            </label>
-            <input
-              type="radio"
-              className="filters__radio"
-              name="type"
-              id="postcards"
-              value="postcards"
-              checked={filters.type === 'postcards'}
-              onChange={handlerTypeChange}
-            />
-            <label htmlFor="postcards" className="filters__label filters__label_postcards">
-              Открытки
-            </label>
+            {filterTypes.map(item => (
+              <FilterRadio key={item.value} {...item} type={filters.type} handlerTypeChange={handlerTypeChange} />
+            ))}
           </fieldset>
           <fieldset className="filters__group filters__group_choices" disabled={search !== ''}>
             <Choices buttonLabel="Цена" isOpen={openChoice === 0} onToggle={() => handleChoicesToggle(0)}>

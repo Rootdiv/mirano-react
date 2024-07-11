@@ -18,6 +18,10 @@ const formatQueryString = params => {
 export const fetchGoods = createAsyncThunk('goods/fetchGoods', async params => {
   const response = await fetch(`${API_URL}/api/products${formatQueryString(params)}`);
 
+  if (!response.ok) {
+    throw new Error('Не удалось получить товары');
+  }
+
   return response.json();
 });
 

@@ -19,15 +19,12 @@ const filtersSlice = createSlice({
       state.maxPrice = '';
       state.category = '';
     },
-    minPriceChange(state, action) {
-      state.minPrice = action.payload.minPrice;
-    },
-    maxPriceChange(state, action) {
-      state.maxPrice = action.payload.maxPrice;
+    priceChange(state, action) {
+      state[action.payload.name] = action.payload.value;
     },
   },
 });
 
-export const { typeChange, minPriceChange, maxPriceChange } = filtersSlice.actions;
+export const { typeChange, priceChange } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

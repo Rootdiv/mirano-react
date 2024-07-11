@@ -1,5 +1,5 @@
-import { useRef } from 'react';
 import './order.scss';
+import { useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '@/redux/orderSlice';
 
@@ -12,11 +12,29 @@ export const Order = () => {
   const dispatch = useDispatch();
   const isOrderReady = false;
 
-  const handlerClose = ({ target }) => {
-    if (target.closest('.order__close') || target.classList.contains('order')) {
-      dispatch(closeModal());
+  const handlerClose = useCallback(
+    event => {
+      const target = event.target;
+      if (target.closest('.order__close') || target.matches('.order') || event.key === 'Escape') {
+        dispatch(closeModal());
+      }
+    },
+    [dispatch],
+  );
+
+  useEffect(() => {
+    const handlerEsc = event => {
+      handlerClose(event);
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handlerEsc);
     }
-  };
+
+    return () => {
+      document.removeEventListener('keydown', handlerEsc);
+    };
+  }, [isOpen, handlerClose]);
 
   if (!isOpen) return null;
 
