@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react';
 
 export const Cart = () => {
   const dispatch = useDispatch();
-  const { isOpen, items } = useSelector(state => state.cart);
+  const { isOpen, items, totalPrice } = useSelector(state => state.cart);
 
   const cartRef = useRef(null);
 
@@ -48,7 +48,7 @@ export const Cart = () => {
           <button type="button" className="cart__order-btn" onClick={handlerOrderOpen}>
             Оформить
           </button>
-          <p className="cart__price cart__price_total">0&nbsp;&#8381;</p>
+          <p className="cart__price cart__price_total">{totalPrice}&nbsp;&#8381;</p>
         </div>
       </div>
     </section>
