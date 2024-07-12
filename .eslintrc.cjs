@@ -75,7 +75,7 @@ module.exports = {
     'prefer-arrow-callback': ['error'],
     'prefer-numeric-literals': ['error'],
     'template-curly-spacing': ['error', 'never'],
-    //!-google
+    // !-google
     'no-cond-assign': 'off',
     'no-irregular-whitespace': 'error',
     'no-unexpected-multiline': 'error',
@@ -140,7 +140,7 @@ module.exports = {
     'max-len': [
       'error',
       {
-        code: 120,
+        code: 100,
         tabWidth: 2,
         ignoreUrls: true,
         ignorePattern: 'goog.(module|require)',
@@ -167,7 +167,7 @@ module.exports = {
         const: 'never',
       },
     ],
-    'operator-linebreak': ['error', 'after'],
+    'operator-linebreak': ['error', 'before', { overrides: { '||': 'after', '&&': 'after' } }],
     'padded-blocks': ['error', 'never'],
     'quote-props': ['error', 'as-needed'],
     quotes: [

@@ -65,11 +65,19 @@ export const Filters = () => {
         <form className="filters__form">
           <fieldset className="filters__group">
             {filterTypes.map(item => (
-              <FilterRadio key={item.value} {...item} type={filters.type} handlerTypeChange={handlerTypeChange} />
+              <FilterRadio
+                key={item.value}
+                {...item}
+                type={filters.type}
+                handlerTypeChange={handlerTypeChange}
+              />
             ))}
           </fieldset>
           <fieldset className="filters__group filters__group_choices">
-            <Choices buttonLabel="Цена" isOpen={openChoice === 0} onToggle={() => handleChoicesToggle(0)}>
+            <Choices
+              buttonLabel="Цена"
+              isOpen={openChoice === 0}
+              onToggle={() => handleChoicesToggle(0)}>
               <fieldset className="filters__price">
                 <input
                   type="text"
@@ -89,7 +97,10 @@ export const Filters = () => {
                 />
               </fieldset>
             </Choices>
-            <Choices buttonLabel="Тип товара" isOpen={openChoice === 1} onToggle={() => handleChoicesToggle(1)}>
+            <Choices
+              buttonLabel="Тип товара"
+              isOpen={openChoice === 1}
+              onToggle={() => handleChoicesToggle(1)}>
               <ul className="filters__type-list">
                 <li className="filters__type-item">
                   <button className="filters__type-button" type="button">

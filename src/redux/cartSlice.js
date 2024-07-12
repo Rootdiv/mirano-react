@@ -26,22 +26,25 @@ export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
   return response.json();
 });
 
-export const addItemToCard = createAsyncThunk('cart/addItemToCard', async ({ productId, quantity }) => {
-  const response = await fetch(`${API_URL}/api/cart/items`, {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ productId, quantity }),
-  });
+export const addItemToCard = createAsyncThunk(
+  'cart/addItemToCard',
+  async ({ productId, quantity }) => {
+    const response = await fetch(`${API_URL}/api/cart/items`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ productId, quantity }),
+    });
 
-  if (!response.ok) {
-    throw new Error('Не удалось отправить товар в корзину');
-  }
+    if (!response.ok) {
+      throw new Error('Не удалось отправить товар в корзину');
+    }
 
-  return response.json();
-});
+    return response.json();
+  },
+);
 
 const initialState = {
   isOpen: false,
@@ -79,7 +82,10 @@ const cartSlice = createSlice({
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.status = 'success';
         state.items = action.payload;
-        state.totalPrice = state.items.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
+        state.totalPrice = state.items.reduce(
+          (acc, { price, quantity }) => acc + price * quantity,
+          0,
+        );
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.status = 'failed';
@@ -91,7 +97,10 @@ const cartSlice = createSlice({
       .addCase(addItemToCard.fulfilled, (state, action) => {
         state.status = 'success';
         state.items = action.payload;
-        state.totalPrice = state.items.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
+        state.totalPrice = state.items.reduce(
+          (acc, { price, quantity }) => acc + price * quantity,
+          0,
+        );
       })
       .addCase(addItemToCard.rejected, (state, action) => {
         state.status = 'failed';

@@ -70,28 +70,63 @@ export const Order = () => {
                 <legend className="order__legend">Данные заказчика</legend>
                 <div className="order__input-group">
                   <input type="text" className="order__input" name="name-bayer" placeholder="Имя" />
-                  <input type="tel" className="order__input" name="phone-bayer" placeholder="Телефон" />
+                  <input
+                    type="tel"
+                    className="order__input"
+                    name="phone-bayer"
+                    placeholder="Телефон"
+                  />
                 </div>
               </fieldset>
               <fieldset className="order__fieldset">
                 <legend className="order__legend">Данные получателя</legend>
                 <div className="order__input-group">
-                  <input type="text" className="order__input" name="name-recipient" placeholder="Имя" />
-                  <input type="tel" className="order__input" name="phone-recipient" placeholder="Телефон" />
+                  <input
+                    type="text"
+                    className="order__input"
+                    name="name-recipient"
+                    placeholder="Имя"
+                  />
+                  <input
+                    type="tel"
+                    className="order__input"
+                    name="phone-recipient"
+                    placeholder="Телефон"
+                  />
                 </div>
               </fieldset>
               <fieldset className="order__fieldset">
                 <legend className="order__legend">Адрес</legend>
                 <div className="order__input-group">
-                  <input type="text" className="order__input order__input" name="street" placeholder="Улица" />
-                  <input type="text" className="order__input order__input_min" name="house" placeholder="Дом" />
-                  <input type="text" className="order__input order__input_min" name="flat" placeholder="Квартира" />
+                  <input
+                    type="text"
+                    className="order__input order__input"
+                    name="street"
+                    placeholder="Улица"
+                  />
+                  <input
+                    type="text"
+                    className="order__input order__input_min"
+                    name="house"
+                    placeholder="Дом"
+                  />
+                  <input
+                    type="text"
+                    className="order__input order__input_min"
+                    name="flat"
+                    placeholder="Квартира"
+                  />
                 </div>
               </fieldset>
               <fieldset className="order__fieldset">
                 <div className="order__payment">
                   <label className="order__label-radio">
-                    <input type="radio" className="order__radio" name="payment-online" defaultChecked />
+                    <input
+                      type="radio"
+                      className="order__radio"
+                      name="payment-online"
+                      defaultChecked
+                    />
                     Оплата онлайн
                   </label>
                 </div>

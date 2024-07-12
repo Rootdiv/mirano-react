@@ -9,7 +9,13 @@ export const CartItem = ({ photoUrl, name, price, quantity }) => (
       <button type="button" className="cart__counter-btn">
         -
       </button>
-      <input type="number" className="cart__counter-input" min="0" max="99" defaultValue={quantity} />
+      <input
+        type="number"
+        className="cart__counter-input"
+        min="0"
+        max="99"
+        defaultValue={quantity}
+      />
       <button type="button" className="cart__counter-btn">
         +
       </button>

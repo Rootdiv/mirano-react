@@ -40,8 +40,14 @@ export const Hero = () => (
           </foreignObject>
         </svg>
         <picture className=" hero__image hero__image_right">
-          <source srcSet="/img/hero-right@1x.avif 1x, /img/hero-right@2x.avif 2x" type="image/avif" />
-          <source srcSet="/img/hero-right@1x.webp 1x, /img/hero-right@2x.webp 2x" type="image/webp" />
+          <source
+            srcSet="/img/hero-right@1x.avif 1x, /img/hero-right@2x.avif 2x"
+            type="image/avif"
+          />
+          <source
+            srcSet="/img/hero-right@1x.webp 1x, /img/hero-right@2x.webp 2x"
+            type="image/webp"
+          />
           <img
             src="/img/hero-right@1x.jpg"
             srcSet="/img/hero-right@2x.jpg 2x"
