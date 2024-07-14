@@ -22,9 +22,12 @@ const filtersSlice = createSlice({
     priceChange(state, action) {
       state[action.payload.name] = action.payload.value;
     },
+    categoryChange(state, action) {
+      state.category = action.payload;
+    },
   },
 });
 
-export const { typeChange, priceChange } = filtersSlice.actions;
+export const { typeChange, priceChange, categoryChange } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

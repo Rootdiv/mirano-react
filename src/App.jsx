@@ -5,12 +5,13 @@ import { Filters } from '@/modules/Filters/Filters';
 import { Subscription } from '@/modules/Subscription/Subscription';
 import { Footer } from '@/modules/Footer/Footer';
 import { Order } from '@/modules/Order/Order';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { registerCart, fetchCart } from '@/redux/cartSlice';
 
 export const App = () => {
   const dispatch = useDispatch();
+  const filterRef = useRef(null);
 
   useEffect(() => {
     const initializeCart = async () => {
@@ -20,12 +21,16 @@ export const App = () => {
     initializeCart();
   }, [dispatch]);
 
+  const scrollToFilter = () => {
+    filterRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
-      <Header />
+      <Header scrollToFilter={scrollToFilter} />
       <main>
         <Hero />
-        <Filters />
+        <Filters filterRef={filterRef} />
         <Goods />
         <Subscription />
       </main>

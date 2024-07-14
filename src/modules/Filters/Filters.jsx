@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods } from '@/redux/goodsSlice';
 import { debounce, getValidFilters } from '@/utils';
-import { typeChange, priceChange } from '@/redux/filtersSlice';
+import { typeChange, priceChange, categoryChange } from '@/redux/filtersSlice';
 import { FilterRadio } from '@/modules/Filters/FilterRadio';
+import clsx from 'clsx';
 
 const filterTypes = [
   { value: 'bouquets', title: 'Цветы' },
@@ -13,11 +14,12 @@ const filterTypes = [
   { value: 'postcards', title: 'Открытки' },
 ];
 
-export const Filters = () => {
+export const Filters = ({ filterRef }) => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
 
   const filters = useSelector(state => state.filters);
+  const categories = useSelector(state => state.goods.categories);
 
   const prevFiltersRef = useRef(filters);
 
@@ -58,8 +60,13 @@ export const Filters = () => {
     dispatch(priceChange({ name: target.name, value: target.value }));
   };
 
+  const handlerCategoryChange = category => {
+    dispatch(categoryChange(category));
+    setOpenChoice(null);
+  };
+
   return (
-    <section className="filters">
+    <section className="filters" ref={filterRef}>
       <h2 className="visually-hidden">Фильтры</h2>
       <div className="container">
         <form className="filters__form">
@@ -97,38 +104,35 @@ export const Filters = () => {
                 />
               </fieldset>
             </Choices>
-            <Choices
-              buttonLabel="Тип товара"
-              isOpen={openChoice === 1}
-              onToggle={() => handleChoicesToggle(1)}>
-              <ul className="filters__type-list">
-                <li className="filters__type-item">
-                  <button className="filters__type-button" type="button">
-                    Монобукеты
-                  </button>
-                </li>
-                <li className="filters__type-item">
-                  <button className="filters__type-button" type="button">
-                    Авторские букеты
-                  </button>
-                </li>
-                <li className="filters__type-item">
-                  <button className="filters__type-button" type="button">
-                    Цветы в коробке
-                  </button>
-                </li>
-                <li className="filters__type-item">
-                  <button className="filters__type-button" type="button">
-                    Цветы в корзине
-                  </button>
-                </li>
-                <li className="filters__type-item">
-                  <button className="filters__type-button" type="button">
-                    Букеты из сухоцветов
-                  </button>
-                </li>
-              </ul>
-            </Choices>
+            {filters.type === 'bouquets' ? (
+              <Choices
+                buttonLabel="Тип товара"
+                isOpen={openChoice === 1}
+                onToggle={() => handleChoicesToggle(1)}>
+                <ul className="filters__type-list">
+                  <li className="filters__type-item">
+                    <button
+                      className="filters__type-button"
+                      type="button"
+                      onClick={() => handlerCategoryChange('')}>
+                      Все типы
+                    </button>
+                  </li>
+                  {categories.map(category => (
+                    <li key={category} className="filters__type-item">
+                      <button
+                        className={clsx('filters__type-button', {
+                          'filters__type-button_active': category === filters.category,
+                        })}
+                        type="button"
+                        onClick={() => handlerCategoryChange(category)}>
+                        {category}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </Choices>
+            ) : null}
           </fieldset>
         </form>
       </div>

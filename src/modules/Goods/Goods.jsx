@@ -2,19 +2,10 @@ import { Card } from '@/modules/Card/Card';
 import { Cart } from '@/modules/Cart/Cart';
 import './goods.scss';
 import { useSelector } from 'react-redux';
-import { useEffect, useRef } from 'react';
 
 export const Goods = () => {
   const { items: goods, status: goodsStatus, error } = useSelector(state => state.goods);
   const goodsTitle = useSelector(state => state.filters.typeName);
-
-  const goodsRef = useRef(null);
-
-  useEffect(() => {
-    if (goodsTitle === 'Результат поиска') {
-      goodsRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [goodsTitle]);
 
   let content = null;
 
@@ -43,7 +34,7 @@ export const Goods = () => {
   }
 
   return (
-    <section className="goods" ref={goodsRef}>
+    <section className="goods">
       <div className="container goods__container">
         <div className="goods__box">
           <h2 className="goods__title">{goodsTitle}</h2>

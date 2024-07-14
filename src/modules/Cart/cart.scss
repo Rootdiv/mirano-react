@@ -103,6 +103,7 @@
     }
 
     &:disabled {
+      pointer-events: none;
       background-color: $light-orange;
       opacity: 40%;
     }

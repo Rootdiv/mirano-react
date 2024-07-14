@@ -4,7 +4,7 @@ import { toggleCart } from '@/redux/cartSlice';
 import { fetchGoods } from '@/redux/goodsSlice';
 import { typeChange } from '@/redux/filtersSlice';
 
-export const Header = () => {
+export const Header = ({ scrollToFilter }) => {
   const dispatch = useDispatch();
   const goodsCart = useSelector(state => state.cart.items);
 
@@ -21,6 +21,7 @@ export const Header = () => {
     if (searchQuery.length >= MIN_LENGTH_STR) {
       dispatch(typeChange({ type: '', typeName: 'Результат поиска' }));
       dispatch(fetchGoods({ search: searchQuery }));
+      scrollToFilter();
       formElem.reset();
     }
   };
@@ -44,7 +45,7 @@ export const Header = () => {
         </form>
         <img src="/img/logo.svg" alt="Логотип Mirano Flower Boutique" className="header__logo" />
         <button type="button" className="header__cart-button" onClick={handlerCartToggle}>
-          {goodsCart.length}
+          {goodsCart.reduce((acc, { quantity }) => acc + quantity, 0)}
         </button>
       </div>
     </header>
