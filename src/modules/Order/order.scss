@@ -83,6 +83,10 @@
       }
     }
 
+    &_date {
+      width: calc(40% - 9px);
+    }
+
     &::placeholder {
       color: rgba($dark, 0.3);
     }

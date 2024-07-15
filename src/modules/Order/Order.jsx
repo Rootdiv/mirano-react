@@ -47,17 +47,11 @@ export const Order = () => {
     selectWrapper.current.classList.remove('order__select-wrapper_active');
   };
 
-  const date = new Date();
-  date.setDate(date.getDate() + 1);
-  const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
-  const month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
-  const deliveryDate = `${day}.${month}`;
-
   const handlerSubmit = event => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formObject = Object.fromEntries(formData);
-    dispatch(updateOrderData({ ...formObject, deliveryDate }));
+    dispatch(updateOrderData(formObject));
     dispatch(sendOrder());
   };
 
@@ -82,6 +76,7 @@ export const Order = () => {
                     name="bayerName"
                     defaultValue={data.bayerName}
                     placeholder="Имя"
+                    required
                   />
                   <input
                     type="tel"
@@ -89,6 +84,7 @@ export const Order = () => {
                     name="bayerPhone"
                     defaultValue={data.bayerPhone}
                     placeholder="Телефон"
+                    required
                   />
                 </div>
               </fieldset>
@@ -101,6 +97,7 @@ export const Order = () => {
                     name="recipientName"
                     defaultValue={data.recipientName}
                     placeholder="Имя"
+                    required
                   />
                   <input
                     type="tel"
@@ -108,6 +105,7 @@ export const Order = () => {
                     name="recipientPhone"
                     defaultValue={data.recipientPhone}
                     placeholder="Телефон"
+                    required
                   />
                 </div>
               </fieldset>
@@ -120,6 +118,7 @@ export const Order = () => {
                     name="street"
                     defaultValue={data.street}
                     placeholder="Улица"
+                    required
                   />
                   <input
                     type="text"
@@ -127,6 +126,7 @@ export const Order = () => {
                     name="house"
                     defaultValue={data.house}
                     placeholder="Дом"
+                    required
                   />
                   <input
                     type="text"
@@ -134,6 +134,7 @@ export const Order = () => {
                     name="flat"
                     defaultValue={data.flat}
                     placeholder="Квартира"
+                    required
                   />
                 </div>
               </fieldset>
@@ -152,9 +153,14 @@ export const Order = () => {
                 </div>
                 <div className="order__delivery">
                   <label className="order__label" htmlFor="delivery">
-                    Доставка {deliveryDate}
+                    Дата доставки
                   </label>
-                  <input type="hidden" name="deliveryDate" defaultValue={data.deliveryDate} />
+                  <input
+                    type="date"
+                    className="order__input order__input_date"
+                    name="deliveryDate"
+                    defaultValue={data.deliveryDate}
+                  />
                   <div className="order__select-wrapper" ref={selectWrapper}>
                     <select
                       id="delivery"

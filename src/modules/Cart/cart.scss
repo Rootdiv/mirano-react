@@ -109,6 +109,11 @@
     }
   }
 
+  &__preload {
+    position: relative;
+    flex-grow: 1;
+  }
+
   &__no-product {
     padding-top: 20px;
     text-align: center;

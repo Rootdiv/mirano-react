@@ -1,18 +1,23 @@
 import clsx from 'clsx';
 import './card.scss';
-import { useDispatch } from 'react-redux';
-import { addItemToCard } from '@/redux/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCard, toggleCart } from '@/redux/cartSlice';
 import { API_URL } from '@/const';
 import { useState } from 'react';
 
 export const Card = ({ className, id, photoUrl, name, price }) => {
   const dispatch = useDispatch();
+  const isOpenCart = useSelector(state => state.cart.isOpen);
 
   // коды: \u00A0 - неразрывный пробел и \u20BD - символ рубля
   const [buttonText, setButtonText] = useState(`${price}\u00A0\u20BD`);
 
   const handlerAddToCard = () => {
-    dispatch(addItemToCard({ productId: id, quantity: 1 }));
+    dispatch(addItemToCard({ productId: id }));
+
+    if (!isOpenCart) {
+      dispatch(toggleCart());
+    }
   };
 
   const handleMouseEnter = () => {

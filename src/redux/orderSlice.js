@@ -2,61 +2,70 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchCart, toggleCart } from '@/redux/cartSlice';
 import { API_URL } from '@/const';
 
-export const sendOrder = createAsyncThunk('order/sendOrder', async (_, { getState, dispatch }) => {
-  const {
-    order: {
-      data: {
-        bayerName,
-        bayerPhone,
-        recipientName,
-        recipientPhone,
-        street,
-        house,
-        flat,
+export const sendOrder = createAsyncThunk(
+  'order/sendOrder',
+  async (_, { getState, dispatch, rejectWithValue }) => {
+    try {
+      const {
+        order: {
+          data: {
+            bayerName,
+            bayerPhone,
+            recipientName,
+            recipientPhone,
+            street,
+            house,
+            flat,
+            paymentOnline,
+            deliveryDate,
+            deliveryTime,
+          },
+        },
+      } = getState();
+
+      const orderData = {
+        buyer: {
+          name: bayerName,
+          phone: bayerPhone,
+        },
+        recipient: {
+          name: recipientName,
+          phone: recipientPhone,
+        },
+        address: `${street}, ${house}, ${flat}`,
         paymentOnline,
         deliveryDate,
         deliveryTime,
-      },
-    },
-  } = getState();
+      };
 
-  const orderData = {
-    buyer: {
-      name: bayerName,
-      phone: bayerPhone,
-    },
-    recipient: {
-      name: recipientName,
-      phone: recipientPhone,
-    },
-    address: `${street}, ${house}, ${flat}`,
-    paymentOnline,
-    deliveryDate,
-    deliveryTime,
-  };
+      const response = await fetch(`${API_URL}/api/orders`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
 
-  const response = await fetch(`${API_URL}/api/orders`, {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(orderData),
-  });
+      if (!response.ok) {
+        throw new Error('Не удалось отправить заказ');
+      }
 
-  if (!response.ok) {
-    throw new Error('Не удалось отправить заказ');
-  }
+      dispatch(toggleCart());
+      dispatch(fetchCart());
 
-  dispatch(toggleCart());
-  dispatch(fetchCart());
-
-  return response.json();
-});
+      return await response.json();
+    } catch (error) {
+      rejectWithValue(error.message);
+    }
+  },
+);
 
 const initialState = {
   isOpen: false,
   orderId: '',
+  status: 'idle',
+  error: null,
   data: {
     bayerName: '',
     bayerPhone: '',
@@ -111,7 +120,7 @@ const modalSlice = createSlice({
       })
       .addCase(sendOrder.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       });
   },
 });

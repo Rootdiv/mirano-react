@@ -1,8 +1,7 @@
 import './header.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleCart } from '@/redux/cartSlice';
-import { fetchGoods } from '@/redux/goodsSlice';
-import { typeChange } from '@/redux/filtersSlice';
+import { searchChange } from '@/redux/filtersSlice';
 
 export const Header = ({ scrollToFilter }) => {
   const dispatch = useDispatch();
@@ -19,8 +18,7 @@ export const Header = ({ scrollToFilter }) => {
     const formData = new FormData(formElem);
     const searchQuery = formData.get('search').trim();
     if (searchQuery.length >= MIN_LENGTH_STR) {
-      dispatch(typeChange({ type: '', typeName: 'Результат поиска' }));
-      dispatch(fetchGoods({ search: searchQuery }));
+      dispatch(searchChange(searchQuery));
       scrollToFilter();
       formElem.reset();
     }

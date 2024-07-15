@@ -6,6 +6,7 @@ const initialState = {
   minPrice: '',
   maxPrice: '',
   category: '',
+  search: '',
 };
 
 const filtersSlice = createSlice({
@@ -18,6 +19,7 @@ const filtersSlice = createSlice({
       state.minPrice = '';
       state.maxPrice = '';
       state.category = '';
+      state.search = '';
     },
     priceChange(state, action) {
       state[action.payload.name] = action.payload.value;
@@ -25,9 +27,17 @@ const filtersSlice = createSlice({
     categoryChange(state, action) {
       state.category = action.payload;
     },
+    searchChange(state, action) {
+      state.type = '';
+      state.typeName = 'Результат поиска';
+      state.minPrice = '';
+      state.maxPrice = '';
+      state.category = '';
+      state.search = action.payload;
+    },
   },
 });
 
-export const { typeChange, priceChange, categoryChange } = filtersSlice.actions;
+export const { typeChange, priceChange, categoryChange, searchChange } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

@@ -14,7 +14,7 @@ export const CartItem = ({ id, photoUrl, name, price, quantity }) => {
   }, 300);
 
   const handlerInputChange = ({ target }) => {
-    const newQuantity = parseInt(target.value) || 0;
+    const newQuantity = parseInt(target.value);
     debouncedInputChange(newQuantity);
   };
 

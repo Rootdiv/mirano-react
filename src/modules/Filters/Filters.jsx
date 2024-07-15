@@ -30,14 +30,10 @@ export const Filters = ({ filterRef }) => {
   ).current;
 
   useEffect(() => {
-    if (filters.type === '') {
-      setOpenChoice(null);
-      return;
-    }
-
     const prevFilters = prevFiltersRef.current;
     const validFilters = getValidFilters(filters);
-    if (prevFilters.type !== filters.type) {
+    if (prevFilters.type !== filters.type || prevFilters.search !== filters.search) {
+      setOpenChoice(null);
       dispatch(fetchGoods(validFilters));
     } else {
       debouncedFetchGoods(validFilters);
@@ -104,7 +100,7 @@ export const Filters = ({ filterRef }) => {
                 />
               </fieldset>
             </Choices>
-            {filters.type === 'bouquets' ? (
+            {filters.type === 'bouquets' || categories.length ? (
               <Choices
                 buttonLabel="Тип товара"
                 isOpen={openChoice === 1}

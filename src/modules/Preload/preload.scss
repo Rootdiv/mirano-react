@@ -1,5 +1,5 @@
-@use '../variables' as *;
-@use '../media' as *;
+@use '@/scss/variables' as *;
+@use '@/scss/media' as *;
 
 @keyframes spin {
   100% {
@@ -8,7 +8,7 @@
 }
 
 .preload {
-  display: none;
+  display: flex;
   position: absolute;
   inset: 0;
   z-index: 999;
