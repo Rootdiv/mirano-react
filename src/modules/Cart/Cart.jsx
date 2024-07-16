@@ -1,8 +1,8 @@
 import './cart.scss';
 import { CartItem } from '@/modules/CartItem/CartItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleCart } from '@/redux/cartSlice';
-import { openModal } from '@/redux/orderSlice';
+import { toggleCart } from '@/redux/slices/cartSlice';
+import { openModal } from '@/redux/slices/orderSlice';
 import { useEffect, useRef } from 'react';
 import { Preload } from '@/modules/Preload/Preload';
 

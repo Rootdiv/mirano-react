@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import './card.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCard, toggleCart } from '@/redux/cartSlice';
+import { addItemToCard } from '@/redux/thunks/cartThunk';
+import { toggleCart } from '@/redux/slices/cartSlice';
 import { API_URL } from '@/const';
 import { useState } from 'react';
 

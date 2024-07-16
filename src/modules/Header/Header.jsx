@@ -1,7 +1,7 @@
 import './header.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleCart } from '@/redux/cartSlice';
-import { searchChange } from '@/redux/filtersSlice';
+import { toggleCart } from '@/redux/slices/cartSlice';
+import { searchChange } from '@/redux/slices/filtersSlice';
 
 export const Header = ({ scrollToFilter }) => {
   const dispatch = useDispatch();

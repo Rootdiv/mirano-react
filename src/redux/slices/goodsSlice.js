@@ -1,29 +1,5 @@
-import { API_URL } from '@/const';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
-const formatQueryString = params => {
-  if (!params || Object.keys(params).length === 0) {
-    return '';
-  }
-
-  const searchParams = new URLSearchParams();
-
-  Object.entries(params).forEach(([key, value]) => {
-    searchParams.append(key, value);
-  });
-
-  return `?${searchParams.toString()}`;
-};
-
-export const fetchGoods = createAsyncThunk('goods/fetchGoods', async params => {
-  const response = await fetch(`${API_URL}/api/products${formatQueryString(params)}`);
-
-  if (!response.ok) {
-    throw new Error('Не удалось получить товары');
-  }
-
-  return response.json();
-});
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchGoods } from '@/redux/thunks/goodsThunk';
 
 const initialState = {
   items: [],
@@ -57,7 +33,7 @@ const goodsSlice = createSlice({
       })
       .addCase(fetchGoods.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       });
   },
 });

@@ -7,7 +7,7 @@ import { Footer } from '@/modules/Footer/Footer';
 import { Order } from '@/modules/Order/Order';
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { registerCart, fetchCart } from '@/redux/cartSlice';
+import { registerCart, fetchCart } from '@/redux/thunks/cartThunk';
 
 export const App = () => {
   const dispatch = useDispatch();

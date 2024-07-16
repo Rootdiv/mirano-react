@@ -2,9 +2,9 @@ import './filters.scss';
 import { Choices } from '@/modules/Choices/Choices';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGoods } from '@/redux/goodsSlice';
+import { fetchGoods } from '@/redux/thunks/goodsThunk';
 import { debounce, getValidFilters } from '@/utils';
-import { typeChange, priceChange, categoryChange } from '@/redux/filtersSlice';
+import { typeChange, priceChange, categoryChange } from '@/redux/slices/filtersSlice';
 import { FilterRadio } from '@/modules/Filters/FilterRadio';
 import clsx from 'clsx';
 

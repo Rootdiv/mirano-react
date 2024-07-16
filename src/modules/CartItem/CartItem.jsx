@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import './cartItem.scss';
 import { API_URL } from '@/const';
 import { useState } from 'react';
-import { addItemToCard } from '@/redux/cartSlice';
+import { addItemToCard } from '@/redux/thunks/cartThunk';
 import { debounce } from '@/utils';
 
 export const CartItem = ({ id, photoUrl, name, price, quantity }) => {
