@@ -12,6 +12,19 @@ export const Cart = () => {
 
   const cartRef = useRef(null);
 
+  let deliveryTime = '';
+  const date = new Date();
+  const hour = date.getHours();
+  const minute = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  // код \u00A0 - неразрывный пробел
+  if (hour < 9) {
+    deliveryTime = 'сегодня\u00A0в\u00A09:00';
+  } else if (hour >= 9 && hour < 20) {
+    deliveryTime = `сегодня\u00A0в\u00A0${hour + 1}:${minute}`;
+  } else if (hour <= 20) {
+    deliveryTime = 'завтра\u00A0в\u00A09:00';
+  }
+
   const handlerCartClose = () => {
     dispatch(toggleCart());
   };
@@ -39,7 +52,7 @@ export const Cart = () => {
             </svg>
           </button>
         </div>
-        <p className="cart__date-delivery">сегодня&nbsp;в&nbsp;14:00</p>
+        <p className="cart__date-delivery">{deliveryTime}</p>
         {status === 'loading' ? (
           <div className="cart__preload">
             <Preload />
