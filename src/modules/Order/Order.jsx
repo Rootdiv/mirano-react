@@ -40,6 +40,8 @@ export const Order = () => {
 
   if (!isOpen) return null;
 
+  const currentMinDate = new Date().toISOString().split('T')[0];
+
   const openSelect = () => {
     selectWrapper.current.classList.add('order__select-wrapper_active');
   };
@@ -48,12 +50,47 @@ export const Order = () => {
     selectWrapper.current.classList.remove('order__select-wrapper_active');
   };
 
+  const handlerDeliveryDate = ({ target }) => {
+    const minDate = new Date(currentMinDate);
+    const selectDate = new Date(target.value);
+
+    if (selectDate.getTime() < minDate.getTime()) {
+      target.style.borderColor = '#ff0000';
+    } else {
+      target.removeAttribute('style');
+      dispatch(updateOrderData({ deliveryDate: target.value }));
+    }
+  };
+
+  const handlerDeliveryTime = ({ target }) => {
+    const minDate = new Date(currentMinDate);
+    const deliveryDate = new Date(data.deliveryDate);
+    const hour = new Date().getHours();
+    const [selectTimeMin, selectTimeMax] = target.value.split('-');
+
+    if (
+      deliveryDate.getTime() <= minDate.getTime() &&
+      hour > parseInt(selectTimeMin) &&
+      hour >= parseInt(selectTimeMax)
+    ) {
+      target.style.borderColor = '#ff0000';
+    } else {
+      target.removeAttribute('style');
+    }
+  };
+
   const handlerSubmit = event => {
     event.preventDefault();
-    const formData = new FormData(event.target);
+    const formElem = event.target;
+    const formData = new FormData(formElem);
     const formObject = Object.fromEntries(formData);
-    dispatch(updateOrderData(formObject));
-    dispatch(sendOrder());
+    if (
+      !formElem.deliveryDate.getAttribute('style') ||
+      !formElem.deliveryTime.getAttribute('style')
+    ) {
+      dispatch(updateOrderData(formObject));
+      dispatch(sendOrder());
+    }
   };
 
   return (
@@ -161,6 +198,9 @@ export const Order = () => {
                     className="order__input order__input_date"
                     name="deliveryDate"
                     defaultValue={data.deliveryDate}
+                    onChange={handlerDeliveryDate}
+                    min={currentMinDate}
+                    required
                   />
                   <div className="order__select-wrapper" ref={selectWrapper}>
                     <select
@@ -169,7 +209,9 @@ export const Order = () => {
                       defaultValue={data.deliveryTime}
                       className="order__select"
                       onFocus={openSelect}
-                      onBlur={closeSelect}>
+                      onBlur={closeSelect}
+                      onChange={handlerDeliveryTime}
+                      required>
                       <option value="9-12">с 9:00 до 12:00</option>
                       <option value="12-15">с 12:00 до 15:00</option>
                       <option value="15-18">с 15:00 до 18:00</option>
