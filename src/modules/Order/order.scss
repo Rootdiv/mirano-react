@@ -217,6 +217,11 @@
       border-color: $light-orange;
       background-color: $orange;
     }
+
+    &:disabled {
+      pointer-events: none;
+      opacity: 40%;
+    }
   }
 
   &__price {

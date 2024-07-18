@@ -50,26 +50,27 @@ export const Order = () => {
     selectWrapper.current.classList.remove('order__select-wrapper_active');
   };
 
-  const handlerDeliveryDate = ({ target }) => {
-    const minDate = new Date(currentMinDate);
-    const selectDate = new Date(target.value);
-
-    if (selectDate.getTime() < minDate.getTime()) {
-      target.style.borderColor = '#ff0000';
-    } else {
-      target.removeAttribute('style');
-      dispatch(updateOrderData({ deliveryDate: target.value }));
-    }
-  };
-
-  const handlerDeliveryTime = ({ target }) => {
-    const minDate = new Date(currentMinDate);
-    const deliveryDate = new Date(data.deliveryDate);
+  const handlerChange = ({ target }) => {
+    let selectDate = new Date(data.deliveryDate);
+    let selectTimeMin = '';
+    let selectTimeMax = '';
     const hour = new Date().getHours();
-    const [selectTimeMin, selectTimeMax] = target.value.split('-');
+    const minDate = new Date(currentMinDate);
 
-    if (
-      deliveryDate.getTime() <= minDate.getTime() &&
+    if (target.name === 'deliveryDate') {
+      selectDate = new Date(target.value);
+    }
+    if (target.name === 'deliveryTime') {
+      [selectTimeMin, selectTimeMax] = target.value.split('-');
+    }
+
+    if (target.value.trim() === '') {
+      target.style.borderColor = '#ff0000';
+    } else if (selectDate.getTime() < minDate.getTime()) {
+      target.style.borderColor = '#ff0000';
+    } else if (
+      // Проверяем, что выбранное дата и время в диапазоне текущего времени и даты
+      selectDate.getTime() <= minDate.getTime() &&
       hour > parseInt(selectTimeMin) &&
       hour >= parseInt(selectTimeMax)
     ) {
@@ -77,19 +78,17 @@ export const Order = () => {
     } else {
       target.removeAttribute('style');
     }
+    dispatch(updateOrderData({ [target.name]: target.value }));
   };
 
   const handlerSubmit = event => {
     event.preventDefault();
     const formElem = event.target;
-    const formData = new FormData(formElem);
-    const formObject = Object.fromEntries(formData);
     if (
-      !Object.values(formObject).includes('') ||
+      !Object.values(data).includes('') ||
       !formElem.deliveryDate.getAttribute('style') ||
       !formElem.deliveryTime.getAttribute('style')
     ) {
-      dispatch(updateOrderData(formObject));
       dispatch(sendOrder());
     }
   };
@@ -113,16 +112,18 @@ export const Order = () => {
                     type="text"
                     className="order__input"
                     name="bayerName"
-                    defaultValue={data.bayerName}
                     placeholder="Имя"
+                    value={data.bayerName}
+                    onChange={handlerChange}
                     required
                   />
                   <input
                     type="tel"
                     className="order__input"
                     name="bayerPhone"
-                    defaultValue={data.bayerPhone}
                     placeholder="Телефон"
+                    value={data.bayerPhone}
+                    onChange={handlerChange}
                     required
                   />
                 </div>
@@ -134,16 +135,18 @@ export const Order = () => {
                     type="text"
                     className="order__input"
                     name="recipientName"
-                    defaultValue={data.recipientName}
                     placeholder="Имя"
+                    value={data.recipientName}
+                    onChange={handlerChange}
                     required
                   />
                   <input
                     type="tel"
                     className="order__input"
                     name="recipientPhone"
-                    defaultValue={data.recipientPhone}
                     placeholder="Телефон"
+                    value={data.recipientPhone}
+                    onChange={handlerChange}
                     required
                   />
                 </div>
@@ -155,24 +158,27 @@ export const Order = () => {
                     type="text"
                     className="order__input order__input"
                     name="street"
-                    defaultValue={data.street}
                     placeholder="Улица"
+                    value={data.street}
+                    onChange={handlerChange}
                     required
                   />
                   <input
                     type="text"
                     className="order__input order__input_min"
                     name="house"
-                    defaultValue={data.house}
                     placeholder="Дом"
+                    value={data.house}
+                    onChange={handlerChange}
                     required
                   />
                   <input
                     type="text"
                     className="order__input order__input_min"
                     name="flat"
-                    defaultValue={data.flat}
                     placeholder="Квартира"
+                    value={data.flat}
+                    onChange={handlerChange}
                     required
                   />
                 </div>
@@ -184,7 +190,8 @@ export const Order = () => {
                       type="radio"
                       className="order__radio"
                       name="paymentOnline"
-                      defaultValue={data.paymentOnline}
+                      value={data.paymentOnline}
+                      onChange={handlerChange}
                       defaultChecked
                     />
                     Оплата онлайн
@@ -198,20 +205,20 @@ export const Order = () => {
                     type="date"
                     className="order__input order__input_date"
                     name="deliveryDate"
-                    defaultValue={data.deliveryDate}
-                    onChange={handlerDeliveryDate}
+                    onChange={handlerChange}
+                    value={data.deliveryDate}
                     min={currentMinDate}
                     required
                   />
                   <div className="order__select-wrapper" ref={selectWrapper}>
                     <select
                       id="delivery"
-                      name="deliveryTime"
-                      defaultValue={data.deliveryTime}
                       className="order__select"
+                      name="deliveryTime"
                       onFocus={openSelect}
+                      value={data.deliveryTime}
                       onBlur={closeSelect}
-                      onChange={handlerDeliveryTime}
+                      onChange={handlerChange}
                       required>
                       <option value="">Выберете время</option>
                       <option value="9-12">с 9:00 до 12:00</option>
@@ -225,7 +232,11 @@ export const Order = () => {
             </form>
             <div className="order__footer">
               <p className="order__price">{totalPrice}&nbsp;&#8381;</p>
-              <button type="submit" form="order" className="order__button">
+              <button
+                type="submit"
+                form="order"
+                className="order__button"
+                disabled={Object.values(data).includes('')}>
                 Заказать
               </button>
             </div>
