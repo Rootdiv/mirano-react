@@ -84,7 +84,7 @@
     }
 
     &_date {
-      width: calc(40% - 9px);
+      width: calc(37% - 9px);
     }
 
     &::placeholder {
@@ -176,7 +176,7 @@
   &__select {
     border-radius: 8px;
     padding: 8px 40px 8px 16px;
-    width: 190px;
+    width: 205px;
     background-color: $bg;
     border: none;
     appearance: none;

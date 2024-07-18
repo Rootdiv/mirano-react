@@ -85,6 +85,7 @@ export const Order = () => {
     const formData = new FormData(formElem);
     const formObject = Object.fromEntries(formData);
     if (
+      !Object.values(formObject).includes('') ||
       !formElem.deliveryDate.getAttribute('style') ||
       !formElem.deliveryTime.getAttribute('style')
     ) {
@@ -212,6 +213,7 @@ export const Order = () => {
                       onBlur={closeSelect}
                       onChange={handlerDeliveryTime}
                       required>
+                      <option value="">Выберете время</option>
                       <option value="9-12">с 9:00 до 12:00</option>
                       <option value="12-15">с 12:00 до 15:00</option>
                       <option value="15-18">с 15:00 до 18:00</option>
